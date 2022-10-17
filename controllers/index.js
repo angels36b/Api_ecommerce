@@ -285,6 +285,55 @@ const updateUser = async (req, res) => {
   }
 }
 
+//creaete user
+
+const createUser = async(req, res) => {
+  const {
+    user_firts_name,
+    user_last_name,
+    email,
+    date_birth,
+    user_password,
+    gender,
+    id_profile
+  } = req.body 
+  
+
+   try {
+   const dbResponse = await connect.query(
+    `INSERT INTO users (
+        user_firts_name,
+        user_last_name,
+        email,
+        date_birth,
+        user_password,
+        gender,
+        id_profile
+      ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+       user_firts_name, user_last_name, email, date_birth,
+       user_password, gender, id_profile
+      ]
+   );
+   //validacion
+   if(dbResponse.rowCount > 0){
+    res.status(201).send({
+      message:"Usuario creado",
+    });
+   }else {
+    res.status(409).send({
+      message:"No se pudo crear el usuario"
+    })
+   }  
+  } catch (error) {
+    res.status(404).send({
+      error,
+    })
+    
+  }
+}
+
 module.exports = {
   createProduct,
   obtenerProducto,
@@ -293,5 +342,6 @@ module.exports = {
   deleteProduct,
   getUsers,
   getaUser,
-  updateUser
+  updateUser,
+  createUser
 };

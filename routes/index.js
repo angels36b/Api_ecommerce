@@ -10,6 +10,7 @@ const {
     deleteProduct,
     getUsers,
     getaUser,
+    createUser,
     updateUser
 } = require('../controllers')
 
@@ -25,7 +26,7 @@ router.delete('/api/v1/:idProduct', deleteProduct);
 
 router.get('/api/v2/users', getUsers);
 router.get('/api/v2/:idUser', getaUser); //obtener un unico usuario
-// router.post('/api/v1/user', createUser);
+router.post('/api/v2/user', createUser);
 router.put('/api/v2/:idUser', updateUser);
 
 module.exports = router
